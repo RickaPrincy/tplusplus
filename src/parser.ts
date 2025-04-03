@@ -82,17 +82,49 @@ export class Parser {
 
   /**
    * Expression
-   * : Literal
-   * | Expression
+   * : Term (("+" | "-") Term)*
    */
   Expression(): ExpressionNode {
-    let left = this.Literal();
-    while (this._lookahead && this._lookahead.type === "OPERATOR") {
+    let left = this.Term(); // Handle multiplication/division first
+
+    while (this._lookahead && (this._lookahead.value === "+" || this._lookahead.value === "-")) {
       const operator = this._eat("OPERATOR").value;
-      const right = this.Literal();
+      const right = this.Term(); // Continue processing with lower precedence
       left = { type: "BinaryExpressionNode", operator, left, right } as BinaryExpressionNode;
     }
+
     return left;
+  }
+
+  /**
+   * Term
+   * : Factor (("*" | "/") Factor)*
+   */
+  Term(): ExpressionNode {
+    let left = this.Factor();
+
+    while (this._lookahead && (this._lookahead.value === "*" || this._lookahead.value === "/")) {
+      const operator = this._eat("OPERATOR").value;
+      const right = this.Factor();
+      left = { type: "BinaryExpressionNode", operator, left, right } as BinaryExpressionNode;
+    }
+
+    return left;
+  }
+
+  /**
+   * Factor
+   * : "(" Expression ")"
+   * | Literal
+   */
+  Factor(): ExpressionNode {
+    if (this._lookahead?.type === "LPAREN") {
+      this._eat("LPAREN");  // Consume '('
+      const expression = this.Expression();  // Parse the expression inside
+      this._eat("RPAREN"); // Consume ')'
+      return expression;
+    }
+    return this.Literal();
   }
 
   /**
