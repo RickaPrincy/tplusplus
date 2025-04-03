@@ -93,16 +93,13 @@ export class Parser {
 
   FunctionDeclaration(): FunctionDeclarationNode {
     this._eat("FUNCTION_DECLARATION_KEYWORD");
-    const identifier = this._eat("IDENTIFIER")?.value;
-    this._eat("LPAREN");
-    this._eat("RPAREN");
+    const identifier = this._eat("IDENTIFIER")!.value as string;
+
+    const parameters = this._parseParameters();
     this._eat("LBRACE");
-    const body: StatementNode[] = [];
-    while (this._lookahead && this._lookahead.type !== "RBRACE") {
-      body.push(this.Statement() as StatementNode);
-    }
-    this._eat("RBRACE");
-    return { type: "FunctionDeclarationNode", identifier: identifier as string, body };
+
+    const body = this._parseBlock();
+    return { type: "FunctionDeclarationNode", identifier, parameters, body };
   }
 
   /**
@@ -198,7 +195,43 @@ export class Parser {
     }
   }
 
-  _eat(tokenType: TokenType) {
+  /**
+   * Parses function parameters.
+   */
+  private _parseParameters(): FunctionDeclarationNode["parameters"] {
+    this._eat("LPAREN");
+
+    const parameters: FunctionDeclarationNode["parameters"] = [];
+    while (this._lookahead?.type !== "RPAREN") {
+      const name = this._eat("IDENTIFIER")!.value as string;
+      this._eat("COLON");
+      const type = this._eat("DATA_TYPE_KEYWORD")!.value as string;
+      parameters.push({ name, type });
+
+      if (this._lookahead?.type === "COMMA") {
+        this._eat("COMMA");
+      }
+    }
+
+    this._eat("RPAREN");
+    return parameters;
+  }
+
+  /**
+   * Parses a block of statements enclosed in curly braces `{ ... }`.
+   */
+  private _parseBlock(): StatementNode[] {
+    const body: StatementNode[] = [];
+
+    while (this._lookahead && this._lookahead.type !== "RBRACE") {
+      body.push(this.Statement() as StatementNode);
+    }
+
+    this._eat("RBRACE");
+    return body;
+  }
+
+  private _eat(tokenType: TokenType) {
     const token = this._lookahead;
     if (token === null) {
       throw new Error(`Excepted Token to be ${tokenType}`);

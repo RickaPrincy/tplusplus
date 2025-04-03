@@ -16,6 +16,7 @@ export type TokenType =
   | "LPAREN"
   | "RPAREN"
   | "SEMICOLON"
+  | "COMMA"
   | "COLON";
 
 export interface Token {
@@ -55,6 +56,7 @@ const SPECS: [RegExp, TokenType | null][] = [
   [/^\]/, "RBRAKET"], // ]
   [/^;/, "SEMICOLON"], // ;
   [/^:/, "COLON"], // :
+  [/^,/, "COMMA"], // ,
 ];
 
 export class Tokenizer {

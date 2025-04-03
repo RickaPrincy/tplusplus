@@ -253,6 +253,7 @@ describe('Parser', () => {
       body: [
         {
           type: "FunctionDeclarationNode",
+          parameters: [],
           identifier: "greet",
           body: [],
         },
@@ -269,6 +270,7 @@ describe('Parser', () => {
       body: [
         {
           type: "FunctionDeclarationNode",
+          parameters: [],
           identifier: "greet",
           body: [
             {
@@ -298,4 +300,24 @@ describe('Parser', () => {
       ],
     });
   })
+
+  test("should parse a function declaration with parameters", () => {
+    const input = "function add(a: number, b: number) {}";
+    const ast = parser.parse(input);
+
+    expect(ast).toEqual({
+      type: "ProgramNode",
+      body: [
+        {
+          type: "FunctionDeclarationNode",
+          identifier: "add",
+          parameters: [
+            { name: "a", type: "number" },
+            { name: "b", type: "number" }
+          ],
+          body: [],
+        },
+      ],
+    });
+  });
 });

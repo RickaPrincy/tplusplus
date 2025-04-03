@@ -44,6 +44,7 @@ export interface VariableDeclarationNode extends StatementNode {
 export interface FunctionDeclarationNode extends StatementNode {
   type: "FunctionDeclarationNode";
   identifier: string;
+  parameters: { name: string, type: string; }[];
   body: StatementNode[];
 }
 
