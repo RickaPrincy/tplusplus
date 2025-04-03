@@ -6,7 +6,8 @@ import {
   StringLiteral,
   VariableDeclarationNode,
   BinaryExpressionNode,
-  FunctionDeclarationNode
+  FunctionDeclarationNode,
+  ReturnStatementNode
 } from './ast';
 import { Token, TokenType, Tokenizer } from './tokenizer';
 
@@ -68,6 +69,8 @@ export class Parser {
         return this.VariableDeclaration();
       case "FUNCTION_DECLARATION_KEYWORD":
         return this.FunctionDeclaration();
+      case "RETURN_KEYWORD":
+        return this.ReturnStatement();
       default:
         throw new Error("Not Implemented");
     }
@@ -91,6 +94,10 @@ export class Parser {
     };
   }
 
+
+  /**
+   * Parses a return statement.
+  */
   FunctionDeclaration(): FunctionDeclarationNode {
     this._eat("FUNCTION_DECLARATION_KEYWORD");
     const identifier = this._eat("IDENTIFIER")!.value as string;
@@ -100,6 +107,21 @@ export class Parser {
 
     const body = this._parseBlock();
     return { type: "FunctionDeclarationNode", identifier, parameters, body };
+  }
+
+  /**
+   * Parses a return statement.
+  */
+  ReturnStatement(): ReturnStatementNode {
+    this._eat("RETURN_KEYWORD");
+
+    let argument: ExpressionNode | null = null;
+    if (this._lookahead?.type !== "SEMICOLON") {
+      argument = this.Expression();
+    }
+
+    this._eat("SEMICOLON");
+    return { type: "ReturnStatementNode", argument };
   }
 
   /**

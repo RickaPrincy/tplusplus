@@ -320,4 +320,37 @@ describe('Parser', () => {
       ],
     });
   });
+
+  test("should parse a function with a return statement", () => {
+    const input = "function square(n: number) { const name: string = 'ricka' \n return 4 * 9; }";
+    const ast = parser.parse(input);
+
+    expect(ast).toEqual({
+      type: "ProgramNode",
+      body: [
+        {
+          type: "FunctionDeclarationNode",
+          identifier: "square",
+          parameters: [{ name: "n", type: "number" }],
+          body: [
+            {
+              type: "VariableDeclarationNode",
+              identifier: "name",
+              valueType: "string",
+              value: { type: "StringLiteral", value: "ricka" },
+            },
+            {
+              type: "ReturnStatementNode",
+              argument: {
+                type: "BinaryExpressionNode",
+                operator: "*",
+                left: { type: "NumericLiteral", value: 4 },
+                right: { type: "NumericLiteral", value: 9 }
+              }
+            }
+          ]
+        }
+      ],
+    });
+  });
 });

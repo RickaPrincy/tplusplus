@@ -7,6 +7,7 @@ export type TokenType =
   | "CONTROL_FLOW_KEYWORD"
   | "DATA_TYPE_KEYWORD"
   | "PRINT_KEYWORD"
+  | "RETURN_KEYWORD"
   | "OPERATOR"
   | "ASSIGNMENT_OPERATOR"
   | "LBRAKET"
@@ -38,6 +39,7 @@ const SPECS: [RegExp, TokenType | null][] = [
   [/^\bwhile\b/, "CONTROL_FLOW_KEYWORD"], // Control flow keywords
   [/^\b(string|number)\b/, "DATA_TYPE_KEYWORD"], // Data types
   [/^\bprint\b/, "PRINT_KEYWORD"], // Print statement
+  [/^\breturn\b/, "RETURN_KEYWORD"], // Return statement
 
   // Identifiers
   [/^[a-zA-Z_][a-zA-Z0-9_]*/, "IDENTIFIER"],

@@ -5,6 +5,7 @@ export type ASTType =
   | "NumericLiteral"
   | "BinaryExpressionNode"
   | "FunctionDeclarationNode"
+  | "ReturnStatementNode"
   | "VariableDeclarationNode";
 
 export interface ASTNode {
@@ -46,6 +47,11 @@ export interface FunctionDeclarationNode extends StatementNode {
   identifier: string;
   parameters: { name: string, type: string; }[];
   body: StatementNode[];
+}
+
+export interface ReturnStatementNode extends StatementNode {
+  type: "ReturnStatementNode";
+  argument: ExpressionNode | null;
 }
 
 export interface BinaryExpressionNode extends ExpressionNode {
