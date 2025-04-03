@@ -1,4 +1,4 @@
-import { ProgramNode, StatementNode, ExpressionNode, NumericLiteral, StringLiteral, VariableDeclarationNode } from './ast';
+import { ProgramNode, StatementNode, ExpressionNode, NumericLiteral, StringLiteral, VariableDeclarationNode, BinaryExpressionNode } from './ast';
 import { Token, TokenType, Tokenizer } from './tokenizer';
 
 export class Parser {
@@ -46,7 +46,7 @@ export class Parser {
 
   /**
    * Statement
-   *  : VariableDeclaration 
+   * : VariableDeclaration 
    * A statement can either be a variable declaration or an expression statement.
    */
   Statement(): StatementNode | null {
@@ -55,37 +55,44 @@ export class Parser {
     }
 
     switch (this._lookahead.type) {
-      case "KEYWORD":
+      case "VARIABLE_DECLARATION_KEYWORD":
         return this.VariableDeclaration();
       default:
-        throw new SyntaxError("Unknown Syntax");
+        throw new Error("Not Implemented");
     }
   }
 
   /**
-   *  VariableDeclaration
+   * VariableDeclaration
    **/
   VariableDeclaration(): VariableDeclarationNode {
-    this._eat("KEYWORD");
-    const identifier = this._eat("IDENTIFIER");
-
-    if (this._eat("PUNCTUATION")?.value !== ":") {
-      throw new SyntaxError("Expect :");
-    }
-
-    this._eat("KEYWORD") // variable type
-
-    if (this._eat("OPERATOR")?.value !== "=") {
-      throw new SyntaxError("Expect =");
-    }
-
-    const value = this.Literal();
-
+    this._eat("VARIABLE_DECLARATION_KEYWORD");        // const | let
+    const identifier = this._eat("IDENTIFIER")?.value;       // variable_name
+    this._eat("COLON");                               // :
+    const valueType = this._eat("DATA_TYPE_KEYWORD")?.value; // string | number
+    this._eat("ASSIGNMENT_OPERATOR");                 // =
+    const value = this.Expression();                     // Expression
     return {
       type: "VariableDeclarationNode",
-      identifier: identifier.value as string,
-      value
+      value,
+      identifier: identifier as string,
+      valueType: valueType as string
     };
+  }
+
+  /**
+   * Expression
+   * : Literal
+   * | Expression
+   */
+  Expression(): ExpressionNode {
+    let left = this.Literal();
+    while (this._lookahead && this._lookahead.type === "OPERATOR") {
+      const operator = this._eat("OPERATOR").value;
+      const right = this.Literal();
+      left = { type: "BinaryExpressionNode", operator, left, right } as BinaryExpressionNode;
+    }
+    return left;
   }
 
   /**
@@ -94,16 +101,25 @@ export class Parser {
    *    | StringLiteral
    **/
   Literal(): ExpressionNode {
-    switch (this._lookahead?.type) {
-      case "NUMBER": return this.NumericLiteral();
-      case "STRING": return this.StringLiteral();
-      default: throw new Error("Not Support literal");
+    const token = this._lookahead;
+
+    if (!token) {
+      throw new SyntaxError("Unexpected end of input");
+    }
+
+    switch (token.type) {
+      case "NUMBER":
+        return this.NumericLiteral();
+      case "STRING":
+        return this.StringLiteral();
+      default:
+        throw new SyntaxError(`Unexpected token: ${token.type}`);
     }
   }
 
   /**
    *  StringLiteral
-   *    : STRING 
+   *    : LITERAL 
    **/
   StringLiteral(): StringLiteral {
     const value = this._eat("STRING").value as unknown as string;
@@ -115,13 +131,13 @@ export class Parser {
 
   /**
    *  NumericLiteral
-   *    : NUMBER
+   *    : LITERAL 
    **/
   NumericLiteral(): NumericLiteral {
-    const token = this._eat("NUMBER");
+    const value = this._eat("NUMBER")?.value;
     return {
       type: 'NumericLiteral',
-      value: Number(token.value)
+      value: Number(value)
     }
   }
 

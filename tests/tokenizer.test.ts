@@ -12,13 +12,13 @@ describe('Tokinezer Tokenizer', () => {
     tokenizer.init(code);
 
     const expectedTokens: Token[] = [
-      { type: "KEYWORD", value: 'let' },
+      { type: "VARIABLE_DECLARATION_KEYWORD", value: 'let' },
       { type: "IDENTIFIER", value: 'x' },
-      { type: "PUNCTUATION", value: ':' },
-      { type: "KEYWORD", value: 'number' },
-      { type: "OPERATOR", value: '=' },
-      { type: "NUMBER", value: 42 },
-      { type: "PUNCTUATION", value: ';' },
+      { type: "COLON", value: ':' },
+      { type: "DATA_TYPE_KEYWORD", value: 'number' },
+      { type: "ASSIGNMENT_OPERATOR", value: '=' },
+      { type: "NUMBER", value: "42" },
+      { type: "SEMICOLON", value: ';' },
     ];
 
     expect(tokenizer.tokenize()).toEqual(expectedTokens);
@@ -29,39 +29,43 @@ describe('Tokinezer Tokenizer', () => {
     tokenizer.init(code);
 
     const expectedTokens: Token[] = [
-      { type: "KEYWORD", value: 'let' },
+      { type: "VARIABLE_DECLARATION_KEYWORD", value: 'let' },
       { type: "IDENTIFIER", value: 'name' },
-      { type: "PUNCTUATION", value: ':' },
-      { type: "KEYWORD", value: 'string' },
-      { type: "OPERATOR", value: '=' },
+      { type: "COLON", value: ':' },
+      { type: "DATA_TYPE_KEYWORD", value: 'string' },
+      { type: "ASSIGNMENT_OPERATOR", value: '=' },
       { type: "STRING", value: "'Alice'" },
-      { type: "PUNCTUATION", value: ';' },
+      { type: "SEMICOLON", value: ';' },
     ];
 
     expect(tokenizer.tokenize()).toEqual(expectedTokens);
   });
 
   test('should handle mixed spaces and newlines correctly', () => {
-    const code = `let x = 5  \n let y = 10;`;
+    const code = `let x: number = 5  \n let y: number = 10;`;
     tokenizer.init(code);
 
     const expectedTokens: Token[] = [
-      { type: "KEYWORD", value: 'let' },
+      { type: "VARIABLE_DECLARATION_KEYWORD", value: 'let' },
       { type: "IDENTIFIER", value: 'x' },
-      { type: "OPERATOR", value: '=' },
-      { type: "NUMBER", value: 5 },
-      { type: "KEYWORD", value: 'let' },
+      { type: "COLON", value: ':' },
+      { type: "DATA_TYPE_KEYWORD", value: 'number' },
+      { type: "ASSIGNMENT_OPERATOR", value: '=' },
+      { type: "NUMBER", value: "5" },
+      { type: "VARIABLE_DECLARATION_KEYWORD", value: 'let' },
       { type: "IDENTIFIER", value: 'y' },
-      { type: "OPERATOR", value: '=' },
-      { type: "NUMBER", value: 10 },
-      { type: "PUNCTUATION", value: ';' },
+      { type: "COLON", value: ':' },
+      { type: "DATA_TYPE_KEYWORD", value: "number" },
+      { type: "ASSIGNMENT_OPERATOR", value: '=' },
+      { type: "NUMBER", value: "10" },
+      { type: "SEMICOLON", value: ";" },
     ];
 
     expect(tokenizer.tokenize()).toEqual(expectedTokens);
   });
 
   test('should throw an error for unexpected tokens', () => {
-    const code = `let x = 5 @ y;`;
+    const code = `let x: number = 5 @ y;`;
     tokenizer.init(code);
 
     expect(() => tokenizer.tokenize()).toThrow(SyntaxError);
@@ -70,27 +74,27 @@ describe('Tokinezer Tokenizer', () => {
   test('should tokenize code with comments and strings', () => {
     const code = `
       // This is a comment
-      let name: string = "John";
+      const name: string = "John";
       /* Block comment */
       let age: number = 30;
     `;
     tokenizer.init(code);
 
     const expectedTokens: Token[] = [
-      { type: "KEYWORD", value: 'let' },
+      { type: "VARIABLE_DECLARATION_KEYWORD", value: 'const' },
       { type: "IDENTIFIER", value: 'name' },
-      { type: "PUNCTUATION", value: ':' },
-      { type: "KEYWORD", value: 'string' },
-      { type: "OPERATOR", value: '=' },
+      { type: "COLON", value: ':' },
+      { type: "DATA_TYPE_KEYWORD", value: 'string' },
+      { type: "ASSIGNMENT_OPERATOR", value: '=' },
       { type: "STRING", value: '"John"' },
-      { type: "PUNCTUATION", value: ';' },
-      { type: "KEYWORD", value: 'let' },
+      { type: "SEMICOLON", value: ';' },
+      { type: "VARIABLE_DECLARATION_KEYWORD", value: 'let' },
       { type: "IDENTIFIER", value: 'age' },
-      { type: "PUNCTUATION", value: ':' },
-      { type: "KEYWORD", value: 'number' },
-      { type: "OPERATOR", value: '=' },
-      { type: "NUMBER", value: 30 },
-      { type: "PUNCTUATION", value: ';' },
+      { type: "COLON", value: ':' },
+      { type: "DATA_TYPE_KEYWORD", value: 'number' },
+      { type: "ASSIGNMENT_OPERATOR", value: '=' },
+      { type: "NUMBER", value: "30" },
+      { type: "SEMICOLON", value: ';' },
     ];
 
     expect(tokenizer.tokenize()).toEqual(expectedTokens);

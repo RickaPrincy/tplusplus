@@ -1,10 +1,10 @@
 export type ASTType =
-  | "ProgramNode"
-  | "VariableDeclarationNode"
-  | "BinaryExpressionNode"
   | "Identifier"
-  | "NumericLiteral"
+  | "ProgramNode"
   | "StringLiteral"
+  | "NumericLiteral"
+  | "BinaryExpressionNode"
+  | "VariableDeclarationNode";
 
 export interface ASTNode {
   type: ASTType;
@@ -28,20 +28,21 @@ export interface NumericLiteral extends ExpressionNode {
   value: number;
 }
 
-export interface Identifier extends ExpressionNode {
+export interface Identifier extends ASTNode {
   type: "Identifier";
   value: string;
 }
 
 export interface VariableDeclarationNode extends StatementNode {
-  identifier: string;
   type: "VariableDeclarationNode";
-  value: ExpressionNode;
+  identifier: string;
+  valueType: string;
+  value: ExpressionNode | NumericLiteral | StringLiteral;
 }
 
 export interface BinaryExpressionNode extends ExpressionNode {
   type: "BinaryExpressionNode";
   operator: string;
-  left: ExpressionNode;
-  right: ExpressionNode;
+  left: ExpressionNode | NumericLiteral | StringLiteral;
+  right: ExpressionNode | NumericLiteral | StringLiteral;
 }

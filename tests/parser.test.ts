@@ -7,16 +7,17 @@ describe('Parser', () => {
     parser = new Parser();
   });
 
-  test('should parse simple declaration', () => {
+  test('should parse simple string declaration', () => {
     const input = 'const test: string = "hello"';
-    const program = parser.parse(input);
+    const ast = parser.parse(input);
 
-    expect(program).toEqual({
+    expect(ast).toEqual({
       type: 'ProgramNode',
       body: [
         {
           type: 'VariableDeclarationNode',
           identifier: "test",
+          valueType: "string",
           value: {
             type: "StringLiteral",
             value: "hello"
@@ -26,17 +27,17 @@ describe('Parser', () => {
     });
   });
 
+  test('should parse simple number declaration', () => {
+    const input = 'const myNumber: number = 50';
+    const ast = parser.parse(input);
 
-  test('should parse simple declaration', () => {
-    const input = 'const myage: number = 50';
-    const program = parser.parse(input);
-
-    expect(program).toEqual({
+    expect(ast).toEqual({
       type: 'ProgramNode',
       body: [
         {
           type: 'VariableDeclarationNode',
-          identifier: "myage",
+          identifier: "myNumber",
+          valueType: "number",
           value: {
             type: "NumericLiteral",
             value: 50

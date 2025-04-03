@@ -1,10 +1,22 @@
 export type TokenType =
   | "NUMBER"
   | "STRING"
-  | "KEYWORD"
   | "IDENTIFIER"
+  | "FUNCTION_DECLARATION_KEYWORD"
+  | "VARIABLE_DECLARATION_KEYWORD"
+  | "CONTROL_FLOW_KEYWORD"
+  | "DATA_TYPE_KEYWORD"
+  | "PRINT_KEYWORD"
   | "OPERATOR"
-  | "PUNCTUATION";
+  | "ASSIGNMENT_OPERATOR"
+  | "LBRAKET"
+  | "RBRAKET"
+  | "LBRACE"
+  | "RBRACE"
+  | "LPAREN"
+  | "RPAREN"
+  | "SEMICOLON"
+  | "COLON";
 
 export interface Token {
   type: TokenType;
@@ -18,10 +30,31 @@ const SPECS: [RegExp, TokenType | null][] = [
   [/^\d+/, "NUMBER"], // Numbers
   [/^"[^"]*"/, "STRING"], // Strings (double quotes)
   [/^'[^']*'/, "STRING"], // Strings (single quotes)
-  [/^\b(let|const|while|function|string|number|print)\b/, "KEYWORD"], // Keywords
-  [/^[a-zA-Z_][a-zA-Z0-9_]*/, "IDENTIFIER"], // Identifiers (variables, functions)
-  [/^[=+\-*/]/, "OPERATOR"], // Operators
-  [/^[:;{}()]/, "PUNCTUATION"], // Punctuation
+
+  // Keywords categorized
+  [/^\bfunction\b/, "FUNCTION_DECLARATION_KEYWORD"], // Function keyword
+  [/^\b(let|const)\b/, "VARIABLE_DECLARATION_KEYWORD"], // Variable declaration
+  [/^\bwhile\b/, "CONTROL_FLOW_KEYWORD"], // Control flow keywords
+  [/^\b(string|number)\b/, "DATA_TYPE_KEYWORD"], // Data types
+  [/^\bprint\b/, "PRINT_KEYWORD"], // Print statement
+
+  // Identifiers
+  [/^[a-zA-Z_][a-zA-Z0-9_]*/, "IDENTIFIER"],
+
+  // Operators categorized
+  [/^=/, "ASSIGNMENT_OPERATOR"], // Assignment
+  [/^[+\-*/%<>!]=?/, "OPERATOR"], // Arithmetic, comparison, logical operators
+  [/^&&|\|\|/, "OPERATOR"], // Logical AND, OR
+
+  // Punctuation
+  [/^{/, "LBRACE"], // {
+  [/^}/, "RBRACE"], // }
+  [/^\(/, "LPAREN"], // (
+  [/^\)/, "RPAREN"], // )
+  [/^\[/, "LBRAKET"], // [
+  [/^\]/, "RBRAKET"], // ]
+  [/^;/, "SEMICOLON"], // ;
+  [/^:/, "COLON"], // :
 ];
 
 export class Tokenizer {
@@ -61,7 +94,7 @@ export class Tokenizer {
 
       return {
         type,
-        value: type === "NUMBER" ? Number(value) : value,
+        value
       };
     }
 
@@ -77,16 +110,14 @@ export class Tokenizer {
     return tokens;
   }
 
-
-  _match(regexp: RegExp, input: string) {
+  private _match(regexp: RegExp, input: string): string | null {
     const match = regexp.exec(input);
     if (!match) {
       return null;
-    };
+    }
 
     const value = match[0];
     this._cursor += value.length;
     return value;
   }
-
 }
