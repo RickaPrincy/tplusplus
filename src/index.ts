@@ -1,1 +1,1 @@
-export * from "./tokinezer"
+export * from "./tokenizer"

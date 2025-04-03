@@ -24,7 +24,7 @@ const SPECS: [RegExp, TokenType | null][] = [
   [/^[:;{}()]/, "PUNCTUATION"], // Punctuation
 ];
 
-export class Tokinezer {
+export class Tokenizer {
   private _string: string;
   private _cursor: number;
 

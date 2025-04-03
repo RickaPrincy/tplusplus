@@ -1,10 +1,10 @@
-import { Tokinezer, Token } from '../src';
+import { Tokenizer, Token } from '../src';
 
 describe('Tokinezer Tokenizer', () => {
-  let tokenizer: Tokinezer;
+  let tokenizer: Tokenizer;
 
   beforeEach(() => {
-    tokenizer = new Tokinezer();
+    tokenizer = new Tokenizer();
   });
 
   test('should tokenize simple TypeScript code', () => {
