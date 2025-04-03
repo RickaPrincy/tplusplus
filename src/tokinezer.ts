@@ -1,11 +1,10 @@
-export enum TokenType {
-  NUMBER = "NUMBER",
-  STRING = "STRING",
-  KEYWORD = "KEYWORD",
-  IDENTIFIER = "IDENTIFIER",
-  OPERATOR = "OPERATOR",
-  PUNCTUATION = "PUNCTUATION"
-}
+export type TokenType =
+  | "NUMBER"
+  | "STRING"
+  | "KEYWORD"
+  | "IDENTIFIER"
+  | "OPERATOR"
+  | "PUNCTUATION";
 
 export interface Token {
   type: TokenType;
@@ -16,13 +15,13 @@ const SPECS: [RegExp, TokenType | null][] = [
   [/^\s+/, null], // Ignore whitespace
   [/^\/\/.*/, null], // Ignore line comments
   [/^\/\*[\s\S]*?\*\//, null], // Ignore block comments
-  [/^\d+/, TokenType.NUMBER], // Numbers
-  [/^"[^"]*"/, TokenType.STRING], // Strings (double quotes)
-  [/^'[^']*'/, TokenType.STRING], // Strings (single quotes)
-  [/^\b(let|const|while|function|string|number)\b/, TokenType.KEYWORD], // Keywords
-  [/^[a-zA-Z_][a-zA-Z0-9_]*/, TokenType.IDENTIFIER], // Identifiers (variables, functions)
-  [/^[=+\-*/]/, TokenType.OPERATOR], // Operators
-  [/^[:;{}()]/, TokenType.PUNCTUATION] // Punctuation
+  [/^\d+/, "NUMBER"], // Numbers
+  [/^"[^"]*"/, "STRING"], // Strings (double quotes)
+  [/^'[^']*'/, "STRING"], // Strings (single quotes)
+  [/^\b(let|const|while|function|string|number|print)\b/, "KEYWORD"], // Keywords
+  [/^[a-zA-Z_][a-zA-Z0-9_]*/, "IDENTIFIER"], // Identifiers (variables, functions)
+  [/^[=+\-*/]/, "OPERATOR"], // Operators
+  [/^[:;{}()]/, "PUNCTUATION"], // Punctuation
 ];
 
 export class Tokinezer {
@@ -43,18 +42,7 @@ export class Tokinezer {
     return this._cursor < this._string.length;
   }
 
-  _match(regexp: RegExp, input: string) {
-    const match = regexp.exec(input);
-    if (!match) {
-      return null;
-    };
-
-    const value = match[0];
-    this._cursor += value.length;
-    return value;
-  }
-
-  nextToken(): Token | null {
+  getNextToken(): Token | null {
     if (!this.hasMoreTokens()) {
       return null;
     }
@@ -68,12 +56,12 @@ export class Tokinezer {
       }
 
       if (type === null) {
-        return this.nextToken();
+        return this.getNextToken();
       }
 
       return {
         type,
-        value: type === TokenType.NUMBER ? Number(value) : value,
+        value: type === "NUMBER" ? Number(value) : value,
       };
     }
 
@@ -83,9 +71,22 @@ export class Tokinezer {
   tokenize(): Token[] {
     const tokens: Token[] = [];
     let token: Token | null;
-    while ((token = this.nextToken()) !== null) {
+    while ((token = this.getNextToken()) !== null) {
       tokens.push(token);
     }
     return tokens;
   }
+
+
+  _match(regexp: RegExp, input: string) {
+    const match = regexp.exec(input);
+    if (!match) {
+      return null;
+    };
+
+    const value = match[0];
+    this._cursor += value.length;
+    return value;
+  }
+
 }

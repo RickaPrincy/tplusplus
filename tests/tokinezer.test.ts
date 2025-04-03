@@ -1,4 +1,4 @@
-import { Tokinezer, Token, TokenType } from '../src';
+import { Tokinezer, Token } from '../src';
 
 describe('Tokinezer Tokenizer', () => {
   let tokenizer: Tokinezer;
@@ -12,13 +12,13 @@ describe('Tokinezer Tokenizer', () => {
     tokenizer.init(code);
 
     const expectedTokens: Token[] = [
-      { type: TokenType.KEYWORD, value: 'let' },
-      { type: TokenType.IDENTIFIER, value: 'x' },
-      { type: TokenType.PUNCTUATION, value: ':' },
-      { type: TokenType.KEYWORD, value: 'number' },
-      { type: TokenType.OPERATOR, value: '=' },
-      { type: TokenType.NUMBER, value: 42 },
-      { type: TokenType.PUNCTUATION, value: ';' },
+      { type: "KEYWORD", value: 'let' },
+      { type: "IDENTIFIER", value: 'x' },
+      { type: "PUNCTUATION", value: ':' },
+      { type: "KEYWORD", value: 'number' },
+      { type: "OPERATOR", value: '=' },
+      { type: "NUMBER", value: 42 },
+      { type: "PUNCTUATION", value: ';' },
     ];
 
     expect(tokenizer.tokenize()).toEqual(expectedTokens);
@@ -29,13 +29,13 @@ describe('Tokinezer Tokenizer', () => {
     tokenizer.init(code);
 
     const expectedTokens: Token[] = [
-      { type: TokenType.KEYWORD, value: 'let' },
-      { type: TokenType.IDENTIFIER, value: 'name' },
-      { type: TokenType.PUNCTUATION, value: ':' },
-      { type: TokenType.KEYWORD, value: 'string' },
-      { type: TokenType.OPERATOR, value: '=' },
-      { type: TokenType.STRING, value: "'Alice'" },
-      { type: TokenType.PUNCTUATION, value: ';' },
+      { type: "KEYWORD", value: 'let' },
+      { type: "IDENTIFIER", value: 'name' },
+      { type: "PUNCTUATION", value: ':' },
+      { type: "KEYWORD", value: 'string' },
+      { type: "OPERATOR", value: '=' },
+      { type: "STRING", value: "'Alice'" },
+      { type: "PUNCTUATION", value: ';' },
     ];
 
     expect(tokenizer.tokenize()).toEqual(expectedTokens);
@@ -46,15 +46,15 @@ describe('Tokinezer Tokenizer', () => {
     tokenizer.init(code);
 
     const expectedTokens: Token[] = [
-      { type: TokenType.KEYWORD, value: 'let' },
-      { type: TokenType.IDENTIFIER, value: 'x' },
-      { type: TokenType.OPERATOR, value: '=' },
-      { type: TokenType.NUMBER, value: 5 },
-      { type: TokenType.KEYWORD, value: 'let' },
-      { type: TokenType.IDENTIFIER, value: 'y' },
-      { type: TokenType.OPERATOR, value: '=' },
-      { type: TokenType.NUMBER, value: 10 },
-      { type: TokenType.PUNCTUATION, value: ';' },
+      { type: "KEYWORD", value: 'let' },
+      { type: "IDENTIFIER", value: 'x' },
+      { type: "OPERATOR", value: '=' },
+      { type: "NUMBER", value: 5 },
+      { type: "KEYWORD", value: 'let' },
+      { type: "IDENTIFIER", value: 'y' },
+      { type: "OPERATOR", value: '=' },
+      { type: "NUMBER", value: 10 },
+      { type: "PUNCTUATION", value: ';' },
     ];
 
     expect(tokenizer.tokenize()).toEqual(expectedTokens);
@@ -77,20 +77,20 @@ describe('Tokinezer Tokenizer', () => {
     tokenizer.init(code);
 
     const expectedTokens: Token[] = [
-      { type: TokenType.KEYWORD, value: 'let' },
-      { type: TokenType.IDENTIFIER, value: 'name' },
-      { type: TokenType.PUNCTUATION, value: ':' },
-      { type: TokenType.KEYWORD, value: 'string' },
-      { type: TokenType.OPERATOR, value: '=' },
-      { type: TokenType.STRING, value: '"John"' },
-      { type: TokenType.PUNCTUATION, value: ';' },
-      { type: TokenType.KEYWORD, value: 'let' },
-      { type: TokenType.IDENTIFIER, value: 'age' },
-      { type: TokenType.PUNCTUATION, value: ':' },
-      { type: TokenType.KEYWORD, value: 'number' },
-      { type: TokenType.OPERATOR, value: '=' },
-      { type: TokenType.NUMBER, value: 30 },
-      { type: TokenType.PUNCTUATION, value: ';' },
+      { type: "KEYWORD", value: 'let' },
+      { type: "IDENTIFIER", value: 'name' },
+      { type: "PUNCTUATION", value: ':' },
+      { type: "KEYWORD", value: 'string' },
+      { type: "OPERATOR", value: '=' },
+      { type: "STRING", value: '"John"' },
+      { type: "PUNCTUATION", value: ';' },
+      { type: "KEYWORD", value: 'let' },
+      { type: "IDENTIFIER", value: 'age' },
+      { type: "PUNCTUATION", value: ':' },
+      { type: "KEYWORD", value: 'number' },
+      { type: "OPERATOR", value: '=' },
+      { type: "NUMBER", value: 30 },
+      { type: "PUNCTUATION", value: ';' },
     ];
 
     expect(tokenizer.tokenize()).toEqual(expectedTokens);
