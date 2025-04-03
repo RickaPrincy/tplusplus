@@ -30,7 +30,7 @@ export interface NumericLiteral extends ExpressionNode {
   value: number;
 }
 
-export interface Identifier extends ASTNode {
+export interface Identifier extends ExpressionNode {
   type: "Identifier";
   value: string;
 }

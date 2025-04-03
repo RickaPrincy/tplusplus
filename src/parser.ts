@@ -1,5 +1,6 @@
 import {
   ProgramNode,
+  Identifier,
   StatementNode,
   ExpressionNode,
   NumericLiteral,
@@ -175,6 +176,7 @@ export class Parser {
    *  Literal 
    *    : NumericLiteral
    *    | StringLiteral
+   *    | Identifier
    **/
   Literal(): ExpressionNode {
     const token = this._lookahead;
@@ -188,9 +190,18 @@ export class Parser {
         return this.NumericLiteral();
       case "STRING":
         return this.StringLiteral();
+      case "IDENTIFIER":
+        return this.Identifier();
       default:
         throw new SyntaxError(`Unexpected token: ${token.type}`);
     }
+  }
+
+  Identifier(): Identifier {
+    return {
+      type: "Identifier",
+      value: this._eat("IDENTIFIER").value as string
+    };
   }
 
   /**

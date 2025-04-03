@@ -353,4 +353,118 @@ describe('Parser', () => {
       ],
     });
   });
+
+  test("should parse a function that returns an identifier", () => {
+    const input = "function getValue(x: number) { return x; }";
+    const ast = parser.parse(input);
+
+    expect(ast).toEqual({
+      type: "ProgramNode",
+      body: [
+        {
+          type: "FunctionDeclarationNode",
+          identifier: "getValue",
+          parameters: [{ name: "x", type: "number" }],
+          body: [
+            {
+              type: "ReturnStatementNode",
+              argument: {
+                type: "Identifier",
+                value: "x"
+              }
+            }
+          ]
+        }
+      ],
+    });
+  });
+
+  test("should parse a function that returns an addition expression with an identifier", () => {
+    const input = "function addOne(x: number) { return x + 1; }";
+    const ast = parser.parse(input);
+
+    expect(ast).toEqual({
+      type: "ProgramNode",
+      body: [
+        {
+          type: "FunctionDeclarationNode",
+          identifier: "addOne",
+          parameters: [{ name: "x", type: "number" }],
+          body: [
+            {
+              type: "ReturnStatementNode",
+              argument: {
+                type: "BinaryExpressionNode",
+                operator: "+",
+                left: { type: "Identifier", value: "x" },
+                right: { type: "NumericLiteral", value: 1 }
+              }
+            }
+          ]
+        }
+      ],
+    });
+  });
+
+  test("should parse a function that returns a multiplication expression with an identifier", () => {
+    const input = "function double(x: number) { return x * 2; }";
+    const ast = parser.parse(input);
+
+    expect(ast).toEqual({
+      type: "ProgramNode",
+      body: [
+        {
+          type: "FunctionDeclarationNode",
+          identifier: "double",
+          parameters: [{ name: "x", type: "number" }],
+          body: [
+            {
+              type: "ReturnStatementNode",
+              argument: {
+                type: "BinaryExpressionNode",
+                operator: "*",
+                left: { type: "Identifier", value: "x" },
+                right: { type: "NumericLiteral", value: 2 }
+              }
+            }
+          ]
+        }
+      ],
+    });
+  });
+
+  test("should parse a function that returns a complex binary expression with an identifier", () => {
+    const input = "function compute(y: number, z: number) { return y * 2 + z; }";
+    const ast = parser.parse(input);
+
+    expect(ast).toEqual({
+      type: "ProgramNode",
+      body: [
+        {
+          type: "FunctionDeclarationNode",
+          identifier: "compute",
+          parameters: [
+            { name: "y", type: "number" },
+            { name: "z", type: "number" }
+          ],
+          body: [
+            {
+              type: "ReturnStatementNode",
+              argument: {
+                type: "BinaryExpressionNode",
+                operator: "+",
+                left: {
+                  type: "BinaryExpressionNode",
+                  operator: "*",
+                  left: { type: "Identifier", value: "y" },
+                  right: { type: "NumericLiteral", value: 2 }
+                },
+                right: { type: "Identifier", value: "z" }
+              }
+            }
+          ]
+        }
+      ],
+    });
+  });
 });
