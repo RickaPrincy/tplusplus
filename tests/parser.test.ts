@@ -243,4 +243,59 @@ describe('Parser', () => {
       ]
     });
   });
+
+  test("should parse a simple function declaration", () => {
+    const input = "function greet() {}";
+    const ast = parser.parse(input);
+
+    expect(ast).toEqual({
+      type: "ProgramNode",
+      body: [
+        {
+          type: "FunctionDeclarationNode",
+          identifier: "greet",
+          body: [],
+        },
+      ],
+    });
+  });
+
+  test("should parse a function declaration with statement inside", () => {
+    const input = "function greet() { const test: number = 5 + 2 * 3 \n const name: string = 'billy' }";
+    const ast = parser.parse(input);
+
+    expect(ast).toEqual({
+      type: "ProgramNode",
+      body: [
+        {
+          type: "FunctionDeclarationNode",
+          identifier: "greet",
+          body: [
+            {
+              type: "VariableDeclarationNode",
+              identifier: "test",
+              valueType: "number",
+              value: {
+                type: "BinaryExpressionNode",
+                operator: "+",
+                left: { type: "NumericLiteral", value: 5 },
+                right: {
+                  type: "BinaryExpressionNode",
+                  operator: "*",
+                  left: { type: "NumericLiteral", value: 2 },
+                  right: { type: "NumericLiteral", value: 3 },
+                },
+              },
+            },
+            {
+              type: "VariableDeclarationNode",
+              identifier: "name",
+              valueType: "string",
+              value: { type: "StringLiteral", value: "billy" },
+            },
+          ],
+        }
+      ],
+    });
+  })
 });

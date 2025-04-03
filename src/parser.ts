@@ -1,4 +1,13 @@
-import { ProgramNode, StatementNode, ExpressionNode, NumericLiteral, StringLiteral, VariableDeclarationNode, BinaryExpressionNode } from './ast';
+import {
+  ProgramNode,
+  StatementNode,
+  ExpressionNode,
+  NumericLiteral,
+  StringLiteral,
+  VariableDeclarationNode,
+  BinaryExpressionNode,
+  FunctionDeclarationNode
+} from './ast';
 import { Token, TokenType, Tokenizer } from './tokenizer';
 
 export class Parser {
@@ -57,6 +66,8 @@ export class Parser {
     switch (this._lookahead.type) {
       case "VARIABLE_DECLARATION_KEYWORD":
         return this.VariableDeclaration();
+      case "FUNCTION_DECLARATION_KEYWORD":
+        return this.FunctionDeclaration();
       default:
         throw new Error("Not Implemented");
     }
@@ -78,6 +89,20 @@ export class Parser {
       identifier: identifier as string,
       valueType: valueType as string
     };
+  }
+
+  FunctionDeclaration(): FunctionDeclarationNode {
+    this._eat("FUNCTION_DECLARATION_KEYWORD");
+    const identifier = this._eat("IDENTIFIER")?.value;
+    this._eat("LPAREN");
+    this._eat("RPAREN");
+    this._eat("LBRACE");
+    const body: StatementNode[] = [];
+    while (this._lookahead && this._lookahead.type !== "RBRACE") {
+      body.push(this.Statement() as StatementNode);
+    }
+    this._eat("RBRACE");
+    return { type: "FunctionDeclarationNode", identifier: identifier as string, body };
   }
 
   /**
