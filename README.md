@@ -1,11 +1,6 @@
-# tplusplus (Transpiler | Typescript to C++) :weary:
+# tplusplus (Little Transpiler): TypeScript to C++ :weary:
 
 I have no idea why, but here it is! A transpiler that parses **TypeScript-like** code into an **Abstract Syntax Tree (AST)** and then converts it to **C++** code. Cool, right? :information_desk_person:
-
-## Features :green_heart::
-
-- Parse **TypeScript**-like Code: It turns your code into an AST representation, capturing structure and logic. :cherries:
-- Convert to **C++**: After parsing into the AST, it transpiles the structure into C++ code. :collision:
 
 ## Example Input (Typescript-like)
 
