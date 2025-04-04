@@ -1,24 +1,24 @@
 export type TokenType =
-  | "NUMBER"
-  | "STRING"
-  | "IDENTIFIER"
-  | "FUNCTION_DECLARATION_KEYWORD"
-  | "VARIABLE_DECLARATION_KEYWORD"
-  | "CONTROL_FLOW_KEYWORD"
-  | "DATA_TYPE_KEYWORD"
-  | "PRINT_KEYWORD"
-  | "RETURN_KEYWORD"
-  | "OPERATOR"
-  | "ASSIGNMENT_OPERATOR"
-  | "LBRAKET"
-  | "RBRAKET"
-  | "LBRACE"
-  | "RBRACE"
-  | "LPAREN"
-  | "RPAREN"
-  | "SEMICOLON"
-  | "COMMA"
-  | "COLON";
+  | 'NUMBER'
+  | 'STRING'
+  | 'IDENTIFIER'
+  | 'FUNCTION_DECLARATION_KEYWORD'
+  | 'VARIABLE_DECLARATION_KEYWORD'
+  | 'CONTROL_FLOW_KEYWORD'
+  | 'DATA_TYPE_KEYWORD'
+  | 'PRINT_KEYWORD'
+  | 'RETURN_KEYWORD'
+  | 'OPERATOR'
+  | 'ASSIGNMENT_OPERATOR'
+  | 'LBRAKET'
+  | 'RBRAKET'
+  | 'LBRACE'
+  | 'RBRACE'
+  | 'LPAREN'
+  | 'RPAREN'
+  | 'SEMICOLON'
+  | 'COMMA'
+  | 'COLON';
 
 export interface Token {
   type: TokenType;
@@ -29,36 +29,36 @@ const SPECS: [RegExp, TokenType | null][] = [
   [/^\s+/, null], // Ignore whitespace
   [/^\/\/.*/, null], // Ignore line comments
   [/^\/\*[\s\S]*?\*\//, null], // Ignore block comments
-  [/^\d+/, "NUMBER"], // Numbers
-  [/^"[^"]*"/, "STRING"], // Strings (double quotes)
-  [/^'[^']*'/, "STRING"], // Strings (single quotes)
+  [/^\d+/, 'NUMBER'], // Numbers
+  [/^"[^"]*"/, 'STRING'], // Strings (double quotes)
+  [/^'[^']*'/, 'STRING'], // Strings (single quotes)
 
   // Keywords categorized
-  [/^\bfunction\b/, "FUNCTION_DECLARATION_KEYWORD"], // Function keyword
-  [/^\b(let|const)\b/, "VARIABLE_DECLARATION_KEYWORD"], // Variable declaration
-  [/^\bwhile\b/, "CONTROL_FLOW_KEYWORD"], // Control flow keywords
-  [/^\b(string|number)\b/, "DATA_TYPE_KEYWORD"], // Data types
-  [/^\bprint\b/, "PRINT_KEYWORD"], // Print statement
-  [/^\breturn\b/, "RETURN_KEYWORD"], // Return statement
+  [/^\bfunction\b/, 'FUNCTION_DECLARATION_KEYWORD'], // Function keyword
+  [/^\b(let|const)\b/, 'VARIABLE_DECLARATION_KEYWORD'], // Variable declaration
+  [/^\bwhile\b/, 'CONTROL_FLOW_KEYWORD'], // Control flow keywords
+  [/^\b(string|number)\b/, 'DATA_TYPE_KEYWORD'], // Data types
+  [/^\bprint\b/, 'PRINT_KEYWORD'], // Print statement
+  [/^\breturn\b/, 'RETURN_KEYWORD'], // Return statement
 
   // Identifiers
-  [/^[a-zA-Z_][a-zA-Z0-9_]*/, "IDENTIFIER"],
+  [/^[a-zA-Z_][a-zA-Z0-9_]*/, 'IDENTIFIER'],
 
   // Operators categorized
-  [/^=/, "ASSIGNMENT_OPERATOR"], // Assignment
-  [/^[+\-*/%<>!]=?/, "OPERATOR"], // Arithmetic, comparison, logical operators
-  [/^&&|\|\|/, "OPERATOR"], // Logical AND, OR
+  [/^=/, 'ASSIGNMENT_OPERATOR'], // Assignment
+  [/^[+\-*/%<>!]=?/, 'OPERATOR'], // Arithmetic, comparison, logical operators
+  [/^&&|\|\|/, 'OPERATOR'], // Logical AND, OR
 
   // Punctuation
-  [/^{/, "LBRACE"], // {
-  [/^}/, "RBRACE"], // }
-  [/^\(/, "LPAREN"], // (
-  [/^\)/, "RPAREN"], // )
-  [/^\[/, "LBRAKET"], // [
-  [/^\]/, "RBRAKET"], // ]
-  [/^;/, "SEMICOLON"], // ;
-  [/^:/, "COLON"], // :
-  [/^,/, "COMMA"], // ,
+  [/^{/, 'LBRACE'], // {
+  [/^}/, 'RBRACE'], // }
+  [/^\(/, 'LPAREN'], // (
+  [/^\)/, 'RPAREN'], // )
+  [/^\[/, 'LBRAKET'], // [
+  [/^\]/, 'RBRAKET'], // ]
+  [/^;/, 'SEMICOLON'], // ;
+  [/^:/, 'COLON'], // :
+  [/^,/, 'COMMA'], // ,
 ];
 
 export class Tokenizer {
@@ -67,7 +67,7 @@ export class Tokenizer {
 
   constructor() {
     this._cursor = 0;
-    this._string = "";
+    this._string = '';
   }
 
   init(input: string) {
@@ -98,7 +98,7 @@ export class Tokenizer {
 
       return {
         type,
-        value
+        value,
       };
     }
 

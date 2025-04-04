@@ -1,61 +1,62 @@
 export type ASTType =
-  | "Identifier"
-  | "ProgramNode"
-  | "StringLiteral"
-  | "NumericLiteral"
-  | "BinaryExpressionNode"
-  | "FunctionDeclarationNode"
-  | "ReturnStatementNode"
-  | "VariableDeclarationNode";
+  | 'Identifier'
+  | 'ProgramNode'
+  | 'StringLiteral'
+  | 'NumericLiteral'
+  | 'BinaryExpressionNode'
+  | 'FunctionDeclarationNode'
+  | 'ReturnStatementNode'
+  | 'VariableDeclarationNode';
 
 export interface ASTNode {
   type: ASTType;
 }
 
 export interface ProgramNode extends ASTNode {
-  type: "ProgramNode";
+  type: 'ProgramNode';
   body: StatementNode[];
 }
 
-export interface StatementNode extends ASTNode { }
-export interface ExpressionNode extends ASTNode { }
+export interface StatementNode extends ASTNode {}
+export interface ExpressionNode extends ASTNode {}
 
 export interface StringLiteral extends ExpressionNode {
-  type: "StringLiteral";
+  type: 'StringLiteral';
   value: string;
 }
 
 export interface NumericLiteral extends ExpressionNode {
-  type: "NumericLiteral";
+  type: 'NumericLiteral';
   value: number;
 }
 
 export interface Identifier extends ExpressionNode {
-  type: "Identifier";
+  type: 'Identifier';
   value: string;
 }
 
 export interface VariableDeclarationNode extends StatementNode {
-  type: "VariableDeclarationNode";
+  type: 'VariableDeclarationNode';
   identifier: string;
   valueType: string;
   value: ExpressionNode | NumericLiteral | StringLiteral;
 }
 
 export interface FunctionDeclarationNode extends StatementNode {
-  type: "FunctionDeclarationNode";
+  type: 'FunctionDeclarationNode';
   identifier: string;
-  parameters: { name: string, type: string; }[];
+  returnType: string;
+  parameters: { name: string; type: string }[];
   body: StatementNode[];
 }
 
 export interface ReturnStatementNode extends StatementNode {
-  type: "ReturnStatementNode";
+  type: 'ReturnStatementNode';
   argument: ExpressionNode | null;
 }
 
 export interface BinaryExpressionNode extends ExpressionNode {
-  type: "BinaryExpressionNode";
+  type: 'BinaryExpressionNode';
   operator: string;
   left: ExpressionNode | NumericLiteral | StringLiteral;
   right: ExpressionNode | NumericLiteral | StringLiteral;

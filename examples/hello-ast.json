@@ -1,0 +1,42 @@
+{
+  "type": "ProgramNode",
+  "body": [
+    {
+      "type": "VariableDeclarationNode",
+      "value": {
+        "type": "StringLiteral",
+        "value": "RickaPrincy"
+      },
+      "identifier": "myName",
+      "valueType": "string"
+    },
+    {
+      "type": "FunctionDeclarationNode",
+      "identifier": "idk",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "number"
+        }
+      ],
+      "body": [
+        {
+          "type": "ReturnStatementNode",
+          "argument": {
+            "type": "BinaryExpressionNode",
+            "operator": "*",
+            "left": {
+              "type": "Identifier",
+              "value": "value"
+            },
+            "right": {
+              "type": "NumericLiteral",
+              "value": 5
+            }
+          }
+        }
+      ],
+      "returnType": "number"
+    }
+  ]
+}

@@ -12,13 +12,13 @@ describe('Tokinezer Tokenizer', () => {
     tokenizer.init(code);
 
     const expectedTokens: Token[] = [
-      { type: "VARIABLE_DECLARATION_KEYWORD", value: 'let' },
-      { type: "IDENTIFIER", value: 'x' },
-      { type: "COLON", value: ':' },
-      { type: "DATA_TYPE_KEYWORD", value: 'number' },
-      { type: "ASSIGNMENT_OPERATOR", value: '=' },
-      { type: "NUMBER", value: "42" },
-      { type: "SEMICOLON", value: ';' },
+      { type: 'VARIABLE_DECLARATION_KEYWORD', value: 'let' },
+      { type: 'IDENTIFIER', value: 'x' },
+      { type: 'COLON', value: ':' },
+      { type: 'DATA_TYPE_KEYWORD', value: 'number' },
+      { type: 'ASSIGNMENT_OPERATOR', value: '=' },
+      { type: 'NUMBER', value: '42' },
+      { type: 'SEMICOLON', value: ';' },
     ];
 
     expect(tokenizer.tokenize()).toEqual(expectedTokens);
@@ -29,13 +29,13 @@ describe('Tokinezer Tokenizer', () => {
     tokenizer.init(code);
 
     const expectedTokens: Token[] = [
-      { type: "VARIABLE_DECLARATION_KEYWORD", value: 'let' },
-      { type: "IDENTIFIER", value: 'name' },
-      { type: "COLON", value: ':' },
-      { type: "DATA_TYPE_KEYWORD", value: 'string' },
-      { type: "ASSIGNMENT_OPERATOR", value: '=' },
-      { type: "STRING", value: "'Alice'" },
-      { type: "SEMICOLON", value: ';' },
+      { type: 'VARIABLE_DECLARATION_KEYWORD', value: 'let' },
+      { type: 'IDENTIFIER', value: 'name' },
+      { type: 'COLON', value: ':' },
+      { type: 'DATA_TYPE_KEYWORD', value: 'string' },
+      { type: 'ASSIGNMENT_OPERATOR', value: '=' },
+      { type: 'STRING', value: "'Alice'" },
+      { type: 'SEMICOLON', value: ';' },
     ];
 
     expect(tokenizer.tokenize()).toEqual(expectedTokens);
@@ -46,19 +46,19 @@ describe('Tokinezer Tokenizer', () => {
     tokenizer.init(code);
 
     const expectedTokens: Token[] = [
-      { type: "VARIABLE_DECLARATION_KEYWORD", value: 'let' },
-      { type: "IDENTIFIER", value: 'x' },
-      { type: "COLON", value: ':' },
-      { type: "DATA_TYPE_KEYWORD", value: 'number' },
-      { type: "ASSIGNMENT_OPERATOR", value: '=' },
-      { type: "NUMBER", value: "5" },
-      { type: "VARIABLE_DECLARATION_KEYWORD", value: 'let' },
-      { type: "IDENTIFIER", value: 'y' },
-      { type: "COLON", value: ':' },
-      { type: "DATA_TYPE_KEYWORD", value: "number" },
-      { type: "ASSIGNMENT_OPERATOR", value: '=' },
-      { type: "NUMBER", value: "10" },
-      { type: "SEMICOLON", value: ";" },
+      { type: 'VARIABLE_DECLARATION_KEYWORD', value: 'let' },
+      { type: 'IDENTIFIER', value: 'x' },
+      { type: 'COLON', value: ':' },
+      { type: 'DATA_TYPE_KEYWORD', value: 'number' },
+      { type: 'ASSIGNMENT_OPERATOR', value: '=' },
+      { type: 'NUMBER', value: '5' },
+      { type: 'VARIABLE_DECLARATION_KEYWORD', value: 'let' },
+      { type: 'IDENTIFIER', value: 'y' },
+      { type: 'COLON', value: ':' },
+      { type: 'DATA_TYPE_KEYWORD', value: 'number' },
+      { type: 'ASSIGNMENT_OPERATOR', value: '=' },
+      { type: 'NUMBER', value: '10' },
+      { type: 'SEMICOLON', value: ';' },
     ];
 
     expect(tokenizer.tokenize()).toEqual(expectedTokens);
@@ -81,20 +81,20 @@ describe('Tokinezer Tokenizer', () => {
     tokenizer.init(code);
 
     const expectedTokens: Token[] = [
-      { type: "VARIABLE_DECLARATION_KEYWORD", value: 'const' },
-      { type: "IDENTIFIER", value: 'name' },
-      { type: "COLON", value: ':' },
-      { type: "DATA_TYPE_KEYWORD", value: 'string' },
-      { type: "ASSIGNMENT_OPERATOR", value: '=' },
-      { type: "STRING", value: '"John"' },
-      { type: "SEMICOLON", value: ';' },
-      { type: "VARIABLE_DECLARATION_KEYWORD", value: 'let' },
-      { type: "IDENTIFIER", value: 'age' },
-      { type: "COLON", value: ':' },
-      { type: "DATA_TYPE_KEYWORD", value: 'number' },
-      { type: "ASSIGNMENT_OPERATOR", value: '=' },
-      { type: "NUMBER", value: "30" },
-      { type: "SEMICOLON", value: ';' },
+      { type: 'VARIABLE_DECLARATION_KEYWORD', value: 'const' },
+      { type: 'IDENTIFIER', value: 'name' },
+      { type: 'COLON', value: ':' },
+      { type: 'DATA_TYPE_KEYWORD', value: 'string' },
+      { type: 'ASSIGNMENT_OPERATOR', value: '=' },
+      { type: 'STRING', value: '"John"' },
+      { type: 'SEMICOLON', value: ';' },
+      { type: 'VARIABLE_DECLARATION_KEYWORD', value: 'let' },
+      { type: 'IDENTIFIER', value: 'age' },
+      { type: 'COLON', value: ':' },
+      { type: 'DATA_TYPE_KEYWORD', value: 'number' },
+      { type: 'ASSIGNMENT_OPERATOR', value: '=' },
+      { type: 'NUMBER', value: '30' },
+      { type: 'SEMICOLON', value: ';' },
     ];
 
     expect(tokenizer.tokenize()).toEqual(expectedTokens);

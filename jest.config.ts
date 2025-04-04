@@ -1,11 +1,11 @@
-import { JestConfigWithTsJest } from "ts-jest";
+import { JestConfigWithTsJest } from 'ts-jest';
 
 const config: JestConfigWithTsJest = {
-  testEnvironment: "node",
+  testEnvironment: 'node',
   transform: {
-    "^.+\\.tsx?$": ["ts-jest", {}],
+    '^.+\\.tsx?$': ['ts-jest', {}],
   },
-  roots: ["<rootDir>/tests"],
+  roots: ['<rootDir>/tests'],
 };
 
 export default config;

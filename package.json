@@ -2,10 +2,11 @@
   "name": "tpluplus",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "keywords": [],
   "author": "",
@@ -17,5 +18,8 @@
     "ts-jest": "^29.3.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "prettier": "^3.5.3"
   }
 }
